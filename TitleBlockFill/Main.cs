@@ -1,12 +1,23 @@
-﻿using System;
+﻿using Multicad.Runtime;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Multicad.Examples
 {
-    public class Main
-    {
-    }
+	class Main : IExtensionApplication
+	{
+
+		/// <summary>
+		/// Инициализация. Регистрация команд
+		/// Init and register commands
+		/// </summary>
+		public void Initialize()
+		{
+		}
+
+		public void Terminate()
+		{
+			// pass
+		}
+	}
+
 }
