@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TitleBlockFill", "TitleBloc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCAD.Examples.NodeWithConnectedNote", "MultiCAD.Examples.NodeWithConnectedNote\MultiCAD.Examples.NodeWithConnectedNote.csproj", "{554CFF98-4AC0-43F3-88CE-82A2950F0BDC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assorted", "Assorted\Assorted.csproj", "{9B33E3E4-4918-4FC8-8EA4-C4D31182C2A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{554CFF98-4AC0-43F3-88CE-82A2950F0BDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{554CFF98-4AC0-43F3-88CE-82A2950F0BDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{554CFF98-4AC0-43F3-88CE-82A2950F0BDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B33E3E4-4918-4FC8-8EA4-C4D31182C2A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B33E3E4-4918-4FC8-8EA4-C4D31182C2A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B33E3E4-4918-4FC8-8EA4-C4D31182C2A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B33E3E4-4918-4FC8-8EA4-C4D31182C2A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
