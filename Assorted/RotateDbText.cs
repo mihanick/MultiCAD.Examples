@@ -11,8 +11,10 @@ using System.Threading.Tasks;
 
 namespace Assorted
 {
-    public static class RotateDbText
-    {
+
+
+	public static class RotateDbText
+	{
 		/// <summary>
 		/// Rotates DbText 90 degrees in positive direction
 		/// </summary>
