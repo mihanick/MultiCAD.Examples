@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandFlagsDescription.cs" />
+    <Compile Include="CommandLineUserAsk.cs" />
     <Compile Include="RotateDbText.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
