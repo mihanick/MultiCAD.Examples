@@ -31,14 +31,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="imapimgd">
+      <HintPath>..\..\..\Program Files\Nanosoft\nanoCAD x64 Plus 20.1\NanoSPDS\bin\imapimgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="mapibasetypes">
       <HintPath>..\..\..\Program Files\Nanosoft\nanoCAD x64 Plus 20.1\NanoSPDS\bin\mapibasetypes.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="mapimgd">
       <HintPath>..\..\..\Program Files\Nanosoft\nanoCAD x64 Plus 20.1\NanoSPDS\bin\mapimgd.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,6 +56,7 @@
   <ItemGroup>
     <Compile Include="CommandFlagsDescription.cs" />
     <Compile Include="CommandLineUserAsk.cs" />
+    <Compile Include="ObjectWithDynamicProperties.cs" />
     <Compile Include="RotateDbText.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
