@@ -19,9 +19,9 @@ namespace Assorted
 				var res = jig.GetTextInput("So yes or no?");
 				if (res == true)
 				{
-					CommandEventArgs cmdResult = jig.GetCommand()
-						if (cmdResult.CommandID == 2)
-							result = false;
+					CommandEventArgs cmdResult = jig.GetCommand();
+					if (cmdResult.CommandID == 2)
+						result = false;
 				}
 			}
 
