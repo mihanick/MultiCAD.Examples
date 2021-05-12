@@ -25,13 +25,22 @@ namespace Assorted
 
 			var text = (DbText)selection.GetObject();
 			var txtGeom = text.Text;
+			
 
-			text.Text = new TextGeom(
-				text: txtGeom.Text,
-				txtGeom.Origin,
-				txtGeom.Direction.RotateBy(Math.PI / 2, new Vector3d(0, 0, 1)),
-				txtGeom.TextStyle);
+			//text.Text = new TextGeom(
+			//	text: txtGeom.Text,
+			//	txtGeom.Origin,
+			//	txtGeom.Direction.RotateBy(Math.PI / 2, new Vector3d(0, 0, 1)),
+			//	txtGeom.TextStyle);
+			// text.Text.Direction = new Vector3d(0, 1, 0);
 
+			var t = Matrix3d.Rotation(Math.PI / 2, new Vector3d(0, 0, 1), txtGeom.Origin);
+			text.DbEntity.Transform(t);
+
+			// selection.GetObject().Cast<McEntity>().DbEntity.Transform(t);
+			// selection.GetObject().Cast<McEntity>().DbEntity.Update();
+
+			//if (text.Geometry.TransformBy(t))
 			text.DbEntity.Update();
 		}
 	}
