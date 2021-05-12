@@ -15,6 +15,7 @@ using Multicad.Symbols;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 
 
 // Узел представляет собой линию с ручками.
@@ -469,6 +470,19 @@ namespace MultiCAD.Examples.NodeWithConnectedNote
 			obj.DbEntity.Update();
 		}
 
+		public override List<ContextMenuItem> GetContextMenu()
+		{
+			return new List<ContextMenuItem>()
+			{
+				new ContextMenuItem("adfs","asdf",1,false,false,34)
+			};
+		}
+
+		void contextMenuItems(Node n, List<ContextMenuItem> l)
+		{
+			return;
+		}
+
 		public override bool GetGripPoints(GripPointsInfo info)
 		{
 			try
@@ -487,6 +501,21 @@ namespace MultiCAD.Examples.NodeWithConnectedNote
 
 				if (!mNodeGeometry.EndPoint.IsEqualTo(mTextPoint))
 					info.AppendGrip(new McSmartGrip<Node>(mNodeGeometry.EndPoint, MoveEndPoint));
+
+				// Example of dropdown menu grip with all available images from resources
+				var gMenu = new McSmartGrip<Node>(mTextPoint + new Vector3d(1000, 0, 0));
+				gMenu.Type = McBaseGrip.GripType.PopupMenu;
+				gMenu.Appearance = McBaseGrip.GripAppearance.PopupMenu;
+				gMenu.GetContextMenu = delegate (Node obj, List<ContextMenuItem> itemsList)
+				{
+					for (int i = 0; i < 255; i++)
+					{
+						var commandName = "copy";
+						itemsList.Add(new ContextMenuItem("image " + i, commandName, i, false, false, i));
+					}
+				};
+
+				info.AppendGrip(gMenu);
 				return true;
 			}
 			catch (Exception e)

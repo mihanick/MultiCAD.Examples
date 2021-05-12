@@ -11,6 +11,8 @@ using Multicad.Geometry;
 using Multicad.Runtime;
 using System.Globalization;
 using Multicad.DatabaseServices.StandardObjects;
+using Multicad.AplicationServices;
+using System.Linq;
 
 namespace DotNetSample
 {
@@ -70,6 +72,24 @@ namespace DotNetSample
 		}
 	}
 
+	public class App : IExtensionApplication
+	{
+		public void Initialize()
+		{
+			GlobalEvents.ChangesStarted += GlobalEvents_ChangesStarted;
+		}
+
+		private void GlobalEvents_ChangesStarted(object sender, ChangesEventsArgs e)
+		{
+
+		}
+
+		public void Terminate()
+		{
+		
+		}
+	}
+
 	[CustomEntity("9CBD869E-AC25-41a4-B9C1-7C182AFDE4A8", "DynPropEntity", "Объект с динамическим списком свойств")]
 	[Serializable]
 	[ContainsCommands]
@@ -87,7 +107,7 @@ namespace DotNetSample
 		}
 
 		protected Point3d _pnt = new Point3d(50, 50, 0);
-		protected Vector3d _vec;
+		public Vector3d _vec;
 		protected String _Text = "Text field";
 		internal List<MyProperty> _Properties = new List<MyProperty>();
 
@@ -124,6 +144,8 @@ namespace DotNetSample
 
 		public override void OnDraw(GeometryBuilder dc)
 		{
+
+
 			dc.Clear();
 			Point3d pnt2 = _pnt + _vec;
 			dc.Color = Multicad.Constants.Colors.ByObject;//цвет будет братся из свойств объекта, и при изменении автоматически перерисуется
@@ -263,18 +285,17 @@ namespace DotNetSample
 		}
 		#endregion
 
-		static int iCut = 0;
+		private static int iCut = 0;
+
 		public override bool SetAsPrimitive(EntityGeometry ent, List<McObjectId> idsOnPrimitive)
 		{
-
 			if (ent.GeometryType == EntityGeomType.kPolyline)
 			{
 				var pline = ent.Polyline;
 				if (pline == null)
 					return false;
 
-				//if (pline.Points.Count == 2)
-				//	return false;
+				var b = pline.boundBlock();
 
 				DbPolyline p = new DbPolyline();
 				p.Geometry = pline;
@@ -290,7 +311,7 @@ namespace DotNetSample
 
 				var pntmin = pline.Points.FirstPoint;
 				var pntmax = pline.Points.FirstPoint;
-				foreach (var pp in pline.Points) 
+				foreach (var pp in pline.Points)
 				{
 					if (pp.X < pntmin.X) pntmin.X = pp.X;
 					if (pp.Y < pntmin.Y) pntmin.Y = pp.Y;
@@ -298,32 +319,16 @@ namespace DotNetSample
 					if (pp.Y > pntmax.Y) pntmax.Y = pp.Y;
 				}
 
-				var b = new BoundBlock(pntmin, pntmax);
+				maxTrimLength = Math.Max(b.SizeByY, maxTrimLength);
 
-				if (!this.TryModify())
-					return false;
-
-				this._vec.X = b.SizeByX;
-				this.Origin = pntmin;
-				
+				this.Origin = b.BasePoint;
+				this._vec.Y = maxTrimLength;
 
 				return true;
-
 			}
 			else if (ent.GeometryType == EntityGeomType.kLine)
 			{
 				var line = ent.LineSeg;
-
-				DbLine l = new DbLine();
-				l.Geometry = new LineSeg3d(line.StartPoint, line.EndPoint);
-				l.DbEntity.Color = Color.Red;
-				l.DbEntity.AddToCurrentDocument();
-
-				DbText t = new DbText();
-				var tg = new TextGeom(this.DbEntity.DocumentID.ToString() + iCut++.ToString(), line.StartPoint, new Vector3d(1, 0, 0), "Standard");
-				tg.Height = 250;
-				t.Geometry = tg;
-				t.DbEntity.AddToCurrentDocument();
 
 				if (line == null)
 					return false;
@@ -334,12 +339,15 @@ namespace DotNetSample
 				this._vec.X = line.EndPoint.X - line.StartPoint.X;
 				return true;
 			}
+
 			return false;
 		}
 
+		public double maxTrimLength = 0;
+
 		public override EntityGeometry GetAsPrimitive()
 		{
-
+			maxTrimLength = 0;
 
 			Point3d pnt2 = _pnt + _vec;
 			var pnts = new Point3d[] { _pnt, new Point3d(_pnt.X, pnt2.Y, 0), pnt2, new Point3d(pnt2.X, _pnt.Y, 0), _pnt };
